@@ -143,6 +143,11 @@ h6,
     display: block; 
 }
 
+.gigs > li .details .venue {
+    font-weight: bold;
+    display: block;
+}
+
 .gigs > li .details .genre {
     font-size: 14px;
 }
