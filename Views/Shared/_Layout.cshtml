@@ -23,7 +23,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Add a Gig", "Create", "Gigs")</li>
-                    
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -38,6 +38,7 @@
     </div>
 
     @Scripts.Render("~/bundles/lib")
+    @Scripts.Render("~/bundles/app")
     @RenderSection("scripts", required: false)
     <script type="text/x-template" id="notifications-template">
         <ul class="notifications">
@@ -104,7 +105,7 @@
                 });
             });
 
-            
+
         });
     </script>
 </body>
