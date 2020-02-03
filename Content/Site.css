@@ -112,6 +112,7 @@ h6,
 .btn {
     /*font-size: 17px;
     padding: 7px 20px;*/
+    -ms-border-radius: 9px;
     border-radius: 9px;
 }
 
@@ -166,6 +167,8 @@ h6,
 
 .gigs > li .details .genre {
     font-size: 14px;
+    display: block;
+    margin-bottom: 4px;
 }
 
 .gigs > li .actions {
