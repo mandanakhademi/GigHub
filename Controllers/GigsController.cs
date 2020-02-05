@@ -12,13 +12,16 @@ namespace GigHub.Controllers
         private readonly ApplicationDbContext _context;
         private readonly AttendanceRepository _attendanceRepository;
         private readonly GigRepository _gigRepository;
-        
+        private readonly FollowingRepository _followingRepository;
+        private readonly GenreRepository _genreRepository;
 
         public GigsController()
         {
             _context = new ApplicationDbContext();
             _attendanceRepository = new AttendanceRepository(_context);
             _gigRepository = new GigRepository(_context);
+            _followingRepository = new FollowingRepository(_context);
+            _genreRepository = new GenreRepository(_context);
         }
 
         public ActionResult Details(int id)
@@ -37,8 +40,8 @@ namespace GigHub.Controllers
                 viewModel.IsAttending =
                     _attendanceRepository.GetAttendance(gig.Id, userId) != null;
 
-                viewModel.IsFollowing = _context.Followings
-                    .Any(f => f.FolloweeId == gig.ArtistId && f.FollowerId == userId);
+                viewModel.IsFollowing =
+                    _followingRepository.GetFollowing(userId, gig.ArtistId) != null;
             }
 
             return View("Details", viewModel);
@@ -81,7 +84,7 @@ namespace GigHub.Controllers
         {
             var viewModel = new GigFormViewModel
             {
-                Genres = _context.Genres.ToList(),
+                Genres = _genreRepository.GetGenres(),
                 Heading = "Add a Gig"
             };
 
@@ -120,7 +123,7 @@ namespace GigHub.Controllers
         {
             if (!ModelState.IsValid)
             {
-                viewModel.Genres = _context.Genres.ToList();
+                viewModel.Genres = _genreRepository.GetGenres();
                 return View("GigForm", viewModel);
             }                
             
@@ -144,7 +147,7 @@ namespace GigHub.Controllers
         {
             if (!ModelState.IsValid)
             {
-                viewModel.Genres = _context.Genres.ToList();
+                viewModel.Genres = _genreRepository.GetGenres();
                 return View("GigForm", viewModel);
             }
 
