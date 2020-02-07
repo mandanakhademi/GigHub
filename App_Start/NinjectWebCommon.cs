@@ -10,6 +10,8 @@ namespace GigHub.App_Start
     using Ninject.Web.Common.WebHost;
     using System;
     using System.Web;
+    using System.Web.Http;
+    using WebApiContrib.IoC.Ninject;
 
     public static class NinjectWebCommon 
     {
@@ -53,6 +55,9 @@ namespace GigHub.App_Start
                         .SelectAllClasses()
                         .BindDefaultInterface();
                 });
+
+                //Note: Add the line below:
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver(kernel);
 
                 return kernel;
             }
