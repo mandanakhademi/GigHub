@@ -62,5 +62,17 @@ namespace GigHub.Tests.Controllers.Api
             result.Should().BeOfType<UnauthorizedResult>();
         }
 
+        [TestMethod]
+        public void Cancel_ValidRequest_ShouldReturnOk()
+        {
+            var gig = new Gig { ArtistId = _userId };
+
+            _mockRepository.Setup(r => r.GetGigWithAttendees(1)).Returns(gig);
+
+            var result = _controller.Cancel(1);
+
+            result.Should().BeOfType<OkResult>();
+        }
+
     }
 }
