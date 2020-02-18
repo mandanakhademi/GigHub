@@ -50,6 +50,36 @@ namespace GigHub.Tests.Controllers.Api
             result.Should().BeOfType<OkResult>();
         }
 
+        [TestMethod]
+        public void DeleteAttendance_NoAttendanceWithGivenIdExists_ShouldReturnNotFound()
+        {
+            var result = _controller.DeleteAttendance(1);
+
+            result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [TestMethod]
+        public void DeleteAttendance_ValidRequest_ShouldReturnOk()
+        {
+            var attendance = new Attendance();
+            _mockRepository.Setup(r => r.GetAttendance(1, _userId)).Returns(attendance);
+
+            var result = _controller.DeleteAttendance(1);
+
+            result.Should().BeOfType<OkNegotiatedContentResult<int>>();
+        }
+
+        [TestMethod]
+        public void DeleteAttendance_ValidRequest_ShouldReturnTheIdOfDeletedAttendance()
+        {
+            var attendance = new Attendance();
+            _mockRepository.Setup(r => r.GetAttendance(1, _userId)).Returns(attendance);
+
+            var result = (OkNegotiatedContentResult<int>)_controller.DeleteAttendance(1);
+
+            result.Content.Should().Be(1);
+        }
+
 
 
 
