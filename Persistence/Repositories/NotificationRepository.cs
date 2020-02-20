@@ -16,11 +16,12 @@ namespace GigHub.Persistence.Repositories
 
         public IEnumerable<Notification> GetNewNotificationsFor(string userId)
         {
-            return _context.UserNotifications
-                .Where(un => un.UserId == userId && !un.IsRead)
+           return  _context.UserNotifications
+                .Where(un => un.User.Id == userId && !un.IsRead)
                 .Select(un => un.Notification)
                 .Include(n => n.Gig.Artist)
                 .ToList();
+           
         }
     }
 }
