@@ -43,12 +43,18 @@ namespace GigHub.Persistence.Repositories
         }
         public IEnumerable<Gig> GetGigsUserAttending(string userId)
         {
-            return _context.Attendances
-                .Where(a => a.AttendeeId == userId)
+            if (_context.Attendances != null)
+            {
+                return _context.Attendances
+                .Where(a => a.AttendeeId == userId && a.Gig.DateTime > DateTime.Now)
                 .Select(a => a.Gig)
                 .Include(g => g.Artist)
                 .Include(g => g.Genre)
                 .ToList();
+            }
+            IEnumerable<Gig> gigs = new List<Gig>();
+            return gigs;
+            
         }
 
         public void Add(Gig gig)
