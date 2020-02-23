@@ -10,11 +10,13 @@ namespace GigHub.IntegrationTests
 
         public override void BeforeTest(ITest test)
         {
+            _transactionScope = new TransactionScope();
             base.BeforeTest(test);
         }
 
         public override void AfterTest(ITest test)
         {
+            _transactionScope.Dispose();
             base.AfterTest(test);
         }
 
